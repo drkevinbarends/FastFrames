@@ -1,0 +1,194 @@
+general:
+  debug_level: DEBUG
+
+  # paths
+  input_filelist_path: "/eos/user/k/kebarend/tWZ/FastFrames/input/filelist.txt"
+  input_sumweights_path: "/eos/user/k/kebarend/tWZ/FastFrames/input/sum_of_weights.txt"
+  output_path_histograms: "/eos/user/k/kebarend/tWZ/FastFrames/output_histograms/"
+  output_path_ntuples: "/eos/user/k/kebarend/tWZ/ntuples/FastFrames/Preselection/${region}"
+
+  # weights
+  default_sumweights: "NOSYS"
+  default_event_weights: "weight_mc_NOSYS"
+
+  default_reco_tree_name: "reco"
+
+  # path to the file with cross-sections
+  xsection_files:
+    - files: ["/cvmfs/atlas.cern.ch/repo/sw/database/GroupData/dev/PMGTools/PMGxsecDB_mc16.txt"]
+      campaigns: ["mc20a", "mc20d", "mc20e"]
+
+  # name of the custom class
+  custom_frame_name: "tWZ4LepClass"
+
+  # automatic systematics?
+  automatic_systematics: True
+  nominal_only: False
+
+  number_of_cpus: 4
+
+  luminosity:
+    mc20a: 36646.7
+    mc20d: 44630.6
+    mc20e: 58791.6
+
+
+# define regions
+regions:
+  - name: "eeee"
+    selection: >
+      eeee_NOSYS == 1
+
+  - name: "eeemu"
+    selection: >
+      eeemu_NOSYS == 1
+
+  - name: "eemumu"
+    selection: >
+      eemumu_NOSYS == 1
+
+  - name: "emumumu"
+    selection: >
+      emumumu_NOSYS == 1
+
+  - name: "mumumumu"
+    selection: >
+      mumumumu_NOSYS == 1
+
+  - name: "all"
+    selection: > 
+      eeee_NOSYS == 1 || eeemu_NOSYS == 1 || eemumu_NOSYS == 1 || emumumu_NOSYS == 1 || mumumumu_NOSYS == 1
+
+
+# define samples
+samples:
+  - name: "Data"
+    dsids: [0]
+    campaigns: ["2015", "2016", "2017", "2018"]
+    simulation_type: "data"
+  - name: "tWZ_DR1"
+    dsids: [525955]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fastsim"
+  - name: "ttZ_Sherpa"
+    dsids: [700309]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ttZ_aMCPy8EG"
+    dsids: [504330,504334,504342]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ZZ_Sherpa"
+    dsids: [364250, 364283, 364288, 345706]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "WZ_Sherpa"
+    dsids: [364253, 364284]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "tZq_aMCPy8EG"
+    dsids: [512059]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fastsim"
+  - name: "tt_PhPy8EG"
+    dsids: [410472]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ttW_Sherpa"
+    dsids: [700205]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ttGamma_MadPy8EG"
+    dsids: [410389]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ttH_PhPy8EG"
+    dsids: [346345]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ttWW_MadPy8EG"
+    dsids: [410081]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ZH_PhPy8EG"
+    dsids: [346310]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "tt_Fakes"
+    dsids: [410472]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+
+ntuples:
+  regions: ["${region}"]
+  branches: [
+    "sumWeights.*",
+    "weight.*",
+    "lumi.*",
+    "xSection.*",
+    "global.*",
+    "mu_pt_GeV_NOSYS",
+    "mu_eta",
+    "mu_select_tight_NOSYS",
+    "el_pt_GeV_NOSYS",
+    "el_eta",
+    "el_select_tight_NOSYS",
+    "jet_pt_GeV_NOSYS",
+    "jet_eta",
+    "jet_GN2v01_FixedCutBEff_77_select",
+    "eeee_NOSYS",
+    "eeemu_NOSYS",
+    "eemumu_NOSYS",
+    "emumumu_NOSYS",
+    "mumumumu_NOSYS",
+    "passedJetPtEtaCut_NOSYS",
+    "passedElectronPtEtaCut_NOSYS",
+    "passedMuonPtEtaCut_NOSYS",
+    "mu_triggers_NOSYS",
+    "el_triggers_NOSYS",
+    "el_firedTriggers_NOSYS",
+    "mu_firedTriggers_NOSYS",
+    "nElectrons_NOSYS",
+    "nMuons_NOSYS",
+    "nLeptons_NOSYS",
+    "n_tight_leptons_NOSYS",
+    "n_loose_leptons_NOSYS",
+    "nJets_NOSYS",
+    "n_btagged_jets_NOSYS",
+    "lep_pt_NOSYS",
+    "lep0_pt_NOSYS", 
+    "lep1_pt_NOSYS", 
+    "lep2_pt_NOSYS", 
+    "lep3_pt_NOSYS", 
+    "lep_sum_charge_NOSYS",
+    "lepton_TLV_NOSYS",
+    "sorted_lep_pdgID_NOSYS",
+    "jet_TLV_NOSYS",
+    "btagged_jet_TLV_NOSYS",
+    "non_btagged_jet_TLV_NOSYS",
+    "differenceMassOSSF_NOSYS",
+    "differenceMassOSSFFlag_NOSYS",
+    "massesOSSF_NOSYS",
+    "extractMassOSSF_NOSYS",
+    "ZCandidates_NOSYS",
+    "nZCandidates_NOSYS",
+    "ZCandidateFlag_NOSYS",
+    "ZCandidate_TLV_NOSYS",
+    "sorted_ZCandidate_TLV_NOSYS",
+    "signalRegionType_NOSYS",
+    "eventTruthFlavour_NOSYS",
+    "jet_el_deltaR_NOSYS",
+    "jet_mu_deltaR_NOSYS",
+    "jet_jet_deltaR_NOSYS",
+    "mu_mu_deltaR_NOSYS",
+    "el_el_deltaR_NOSYS",
+    "el_mu_deltaR_NOSYS",
+    "nMuonsFromMuVariables_NOSYS",
+    "nElectronsFromElVariables_NOSYS",
+    "nTotalLeptons_NOSYS",
+    "nJetsFromJetVariables_NOSYS",
+    "nTightElectronsFromElVariables_NOSYS",
+    "nTightMuonsFromMuVariables_NOSYS",
+    "nLooseElectronsFromElVariables_NOSYS",
+    "nLooseMuonsFromMuVariables_NOSYS"
+  ]
