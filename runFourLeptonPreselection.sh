@@ -1,12 +1,15 @@
 #!/bin/bash
 
 runs=(
-    "eeee"
-    "eeemu"
-    "eemumu"
-    "emumumu"
-    "mumumumu"
-    "all"
+    "Preselection"
+    "LooseLeptons"
+    "TightLeptons"
+    "LeptonPt"
+    "LeptonCharge"
+    "OSSF"
+    "ZCandidates"
+    "Jets"
+    "Bjets"
 )
 
 for param in "${runs[@]}"; do

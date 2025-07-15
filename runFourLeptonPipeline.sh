@@ -7,18 +7,17 @@ runs=(
     "ttZCR"
     "ZZbCR"
 )
-#runs=("ttZCR")
 
 for param in "${runs[@]}"; do
     export region="$param"
 
     echo "Running with region: $region"
 
-    rm -rf /eos/user/k/kebarend/tWZ/ntuples/FastFrames/FinalSelection/$region/*.root
+    rm -rf /eos/user/k/kebarend/tWZ/ntuples/FastFrames/FinalSelection/FourLeptonChannel/$region/*.root
 
     # Create a temporary config file
-    temp_config="FastFrames/temp_config.yml"
-    envsubst < FastFrames/tWZ4Lep_config.yml > "$temp_config"
+    temp_config="FastFrames/temp3LepConfig.yml"
+    envsubst < FastFrames/tWZ4LepConfig.yml > "$temp_config"
 
     # Run Python with the temporary config file
     python3 FastFrames/python/FastFrames.py -c "$temp_config" --step n

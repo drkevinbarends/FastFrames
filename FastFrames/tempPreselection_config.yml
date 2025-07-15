@@ -5,7 +5,7 @@ general:
   input_filelist_path: "/eos/user/k/kebarend/tWZ/FastFrames/input/filelist.txt"
   input_sumweights_path: "/eos/user/k/kebarend/tWZ/FastFrames/input/sum_of_weights.txt"
   output_path_histograms: "/eos/user/k/kebarend/tWZ/FastFrames/output_histograms/"
-  output_path_ntuples: "/eos/user/k/kebarend/tWZ/ntuples/FastFrames/Preselection/all"
+  output_path_ntuples: "/eos/user/k/kebarend/tWZ/ntuples/FastFrames/Preselection/Bjets"
 
   # weights
   default_sumweights: "NOSYS"
@@ -19,7 +19,7 @@ general:
       campaigns: ["mc20a", "mc20d", "mc20e"]
 
   # name of the custom class
-  custom_frame_name: "tWZ4LepClass"
+  custom_frame_name: "tWZClass"
 
   # automatic systematics?
   automatic_systematics: True
@@ -35,30 +35,86 @@ general:
 
 # define regions
 regions:
-  - name: "eeee"
-    selection: >
-      eeee_NOSYS == 1
-
-  - name: "eeemu"
-    selection: >
-      eeemu_NOSYS == 1
-
-  - name: "eemumu"
-    selection: >
-      eemumu_NOSYS == 1
-
-  - name: "emumumu"
-    selection: >
-      emumumu_NOSYS == 1
-
-  - name: "mumumumu"
-    selection: >
-      mumumumu_NOSYS == 1
-
-  - name: "all"
+  - name: "Preselection"
     selection: > 
-      eeee_NOSYS == 1 || eeemu_NOSYS == 1 || eemumu_NOSYS == 1 || emumumu_NOSYS == 1 || mumumumu_NOSYS == 1
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
 
+  - name: "LooseLeptons"
+    selection: > 
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+
+  - name: "TightLeptons"
+    selection: > 
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+
+  - name: "LeptonPt"
+    selection: > 
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+      && lep0_pt_NOSYS > 28. && lep1_pt_NOSYS > 18. && lep2_pt_NOSYS > 10. && lep3_pt_NOSYS > 10.
+
+  - name: "LeptonCharge"
+    selection: > 
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+      && lep0_pt_NOSYS > 28. && lep1_pt_NOSYS > 18. && lep2_pt_NOSYS > 10. && lep3_pt_NOSYS > 10.
+      && lep_sum_charge_NOSYS == 0
+
+  - name: "OSSF"
+    selection: > 
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+      && lep0_pt_NOSYS > 28. && lep1_pt_NOSYS > 18. && lep2_pt_NOSYS > 10. && lep3_pt_NOSYS > 10.
+      && lep_sum_charge_NOSYS == 0
+      && ossfFlag_NOSYS == 1
+
+  - name: "ZCandidates"
+    selection: > 
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+      && lep0_pt_NOSYS > 28. && lep1_pt_NOSYS > 18. && lep2_pt_NOSYS > 10. && lep3_pt_NOSYS > 10.
+      && lep_sum_charge_NOSYS == 0
+      && ossfFlag_NOSYS == 1
+      && nOSSF_inZWindow_NOSYS == 1 && nZCandidates_NOSYS == 1
+
+  - name: "Jets"
+    selection: >
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+      && lep0_pt_NOSYS > 28. && lep1_pt_NOSYS > 18. && lep2_pt_NOSYS > 10. && lep3_pt_NOSYS > 10.
+      && lep_sum_charge_NOSYS == 0
+      && ossfFlag_NOSYS == 1
+      && nOSSF_inZWindow_NOSYS == 1 && nZCandidates_NOSYS == 1
+      && nJets_NOSYS >= 2
+
+  - name: "Bjets"
+    selection: >
+      passedElectronPtEtaCut_NOSYS && passedMuonPtEtaCut_NOSYS
+      && nJets_NOSYS >= 1
+      && (nLooseElectrons_NOSYS + nLooseMuons_NOSYS) == 4
+      && (nTightElectrons_NOSYS + nTightMuons_NOSYS) == 4
+      && lep0_pt_NOSYS > 28. && lep1_pt_NOSYS > 18. && lep2_pt_NOSYS > 10. && lep3_pt_NOSYS > 10.
+      && lep_sum_charge_NOSYS == 0
+      && ossfFlag_NOSYS == 1
+      && nOSSF_inZWindow_NOSYS == 1 && nZCandidates_NOSYS == 1
+      && nJets_NOSYS >= 2
+      && nBjets_NOSYS == 2
 
 # define samples
 samples:
@@ -70,6 +126,10 @@ samples:
     dsids: [525955]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fastsim"
+  - name: "tWZ_DR2"
+    dsids: [525956]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fastsim"
   - name: "ttZ_Sherpa"
     dsids: [700309]
     campaigns: ["mc20a", "mc20d", "mc20e"]
@@ -79,11 +139,15 @@ samples:
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
   - name: "ZZ_Sherpa"
-    dsids: [364250, 364283, 364288, 345706]
+    dsids: [700587, 700600]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
   - name: "WZ_Sherpa"
-    dsids: [364253, 364284]
+    dsids: [700588, 700601]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "VVV_Sherpa"
+    dsids: [364242, 364243, 364245, 364246, 364247, 364248]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
   - name: "tZq_aMCPy8EG"
@@ -95,11 +159,11 @@ samples:
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
   - name: "ttW_Sherpa"
-    dsids: [700205]
+    dsids: [700205, 700168]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
   - name: "ttGamma_MadPy8EG"
-    dsids: [410389]
+    dsids: [504554]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
   - name: "ttH_PhPy8EG"
@@ -114,81 +178,34 @@ samples:
     dsids: [346310]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
-  - name: "tt_Fakes"
-    dsids: [410472]
+  - name: "ttt_MGPy8EG"
+    dsids: [304014]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "tttt_aMCPy8EG"
+    dsids: [412043]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fastsim"
+  - name: "VH_PhPy8EG_ZH"
+    dsids: [346310]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "VH_PhPy8EG_WpH"
+    dsids: [346311]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "VH_PhPy8EG_WmH"
+    dsids: [346312]
+    campaigns: ["mc20a"]
+    simulation_type: "fullsim"
+  - name: "tW_PhPy8EG"
+    dsids: [410648, 410649]
+    campaigns: ["mc20a", "mc20d", "mc20e"]
+    simulation_type: "fullsim"
+  - name: "ZGamma_Sherpa"
+    dsids: [700398, 700399, 700400]
     campaigns: ["mc20a", "mc20d", "mc20e"]
     simulation_type: "fullsim"
 
 ntuples:
-  regions: ["all"]
-  branches: [
-    "sumWeights.*",
-    "weight.*",
-    "lumi.*",
-    "xSection.*",
-    "global.*",
-    "mu_pt_GeV_NOSYS",
-    "mu_eta",
-    "mu_select_tight_NOSYS",
-    "el_pt_GeV_NOSYS",
-    "el_eta",
-    "el_select_tight_NOSYS",
-    "jet_pt_GeV_NOSYS",
-    "jet_eta",
-    "jet_GN2v01_FixedCutBEff_77_select",
-    "eeee_NOSYS",
-    "eeemu_NOSYS",
-    "eemumu_NOSYS",
-    "emumumu_NOSYS",
-    "mumumumu_NOSYS",
-    "passedJetPtEtaCut_NOSYS",
-    "passedElectronPtEtaCut_NOSYS",
-    "passedMuonPtEtaCut_NOSYS",
-    "mu_triggers_NOSYS",
-    "el_triggers_NOSYS",
-    "el_firedTriggers_NOSYS",
-    "mu_firedTriggers_NOSYS",
-    "nElectrons_NOSYS",
-    "nMuons_NOSYS",
-    "nLeptons_NOSYS",
-    "n_tight_leptons_NOSYS",
-    "n_loose_leptons_NOSYS",
-    "nJets_NOSYS",
-    "n_btagged_jets_NOSYS",
-    "lep_pt_NOSYS",
-    "lep0_pt_NOSYS", 
-    "lep1_pt_NOSYS", 
-    "lep2_pt_NOSYS", 
-    "lep3_pt_NOSYS", 
-    "lep_sum_charge_NOSYS",
-    "lepton_TLV_NOSYS",
-    "sorted_lep_pdgID_NOSYS",
-    "jet_TLV_NOSYS",
-    "btagged_jet_TLV_NOSYS",
-    "non_btagged_jet_TLV_NOSYS",
-    "differenceMassOSSF_NOSYS",
-    "differenceMassOSSFFlag_NOSYS",
-    "massesOSSF_NOSYS",
-    "extractMassOSSF_NOSYS",
-    "ZCandidates_NOSYS",
-    "nZCandidates_NOSYS",
-    "ZCandidateFlag_NOSYS",
-    "ZCandidate_TLV_NOSYS",
-    "sorted_ZCandidate_TLV_NOSYS",
-    "signalRegionType_NOSYS",
-    "eventTruthFlavour_NOSYS",
-    "jet_el_deltaR_NOSYS",
-    "jet_mu_deltaR_NOSYS",
-    "jet_jet_deltaR_NOSYS",
-    "mu_mu_deltaR_NOSYS",
-    "el_el_deltaR_NOSYS",
-    "el_mu_deltaR_NOSYS",
-    "nMuonsFromMuVariables_NOSYS",
-    "nElectronsFromElVariables_NOSYS",
-    "nTotalLeptons_NOSYS",
-    "nJetsFromJetVariables_NOSYS",
-    "nTightElectronsFromElVariables_NOSYS",
-    "nTightMuonsFromMuVariables_NOSYS",
-    "nLooseElectronsFromElVariables_NOSYS",
-    "nLooseMuonsFromMuVariables_NOSYS"
-  ]
+  regions: ["Bjets"]

@@ -109,6 +109,34 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       storeChannel,
       {"pass_mumumumu_NOSYS"}
   );
+  // Variable
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "eee_NOSYS",
+      storeChannel,
+      {"pass_eee_NOSYS"}
+  );
+  // Variable
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "eemu_NOSYS",
+      storeChannel,
+      {"pass_eemu_NOSYS"}
+  );
+  // Variable
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "emumu_NOSYS",
+      storeChannel,
+      {"pass_emumu_NOSYS"}
+  );
+  // Variable
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "mumumu_NOSYS",
+      storeChannel,
+      {"pass_mumumu_NOSYS"}
+  );
 
   /* 
     ======================================================
@@ -1028,6 +1056,9 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       const std::vector<float>& eta,
       const std::vector<float>& phi,
       const std::vector<float>& charge,
+      const std::vector<char>& medium_noniso,
+      const std::vector<char>& medium,
+      const std::vector<char>& tight_noniso,
       const std::vector<char>& tight,
       const std::vector<char>& HLT_e24_e26,
       const std::vector<char>& HLT_e60,
@@ -1038,6 +1069,9 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       std::vector<float> eta_float(eta.begin(), eta.end());
       std::vector<float> phi_float(phi.begin(), phi.end());
       std::vector<float> charge_float(charge.begin(), charge.end());
+      std::vector<float> medium_noniso_float(medium_noniso.begin(), medium_noniso.end());
+      std::vector<float> medium_float(medium.begin(), medium.end());
+      std::vector<float> tight_noniso_float(tight_noniso.begin(), tight_noniso.end());
       std::vector<float> tight_float(tight.begin(), tight.end());
       std::vector<float> HLT_e24_e26_float(HLT_e24_e26.begin(), HLT_e24_e26.end());
       std::vector<float> HLT_e60_float(HLT_e60.begin(), HLT_e60.end());
@@ -1065,6 +1099,12 @@ ROOT::RDF::RNode tWZClass::defineVariables(
           all_variables.push_back(charge_float[indices[i]]);
           all_variables.push_back(0.);
           if (tight_float[indices[i]] == 1) {
+            all_variables.push_back(4.);
+          } else if (tight_noniso_float[indices[i]] == 1) {
+            all_variables.push_back(3.);
+          } else if (medium_float[indices[i]] == 1) {
+            all_variables.push_back(2.);
+          } else if (medium_noniso_float[indices[i]] == 1) {
             all_variables.push_back(1.);
           } else {
             all_variables.push_back(0.);
@@ -1101,7 +1141,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineElectronVariablesData,
         {
             "el_pt_GeV_NOSYS", "el_e_GeV_NOSYS", "el_eta", "el_phi",
-            "el_charge", "el_select_tight_NOSYS",
+            "el_charge", "el_select_medium_noniso_NOSYS", "el_select_medium_NOSYS", "el_select_tight_noniso_NOSYS", "el_select_tight_NOSYS",
             "el_trigMatched_HLT_e24_lhmedium_L1EM20VH", "el_trigMatched_HLT_e60_lhmedium", "el_trigMatched_HLT_e120_lhloose"
         }
     );
@@ -1113,7 +1153,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineElectronVariablesData,
         {
             "el_pt_GeV_NOSYS", "el_e_GeV_NOSYS", "el_eta", "el_phi",
-            "el_charge", "el_select_tight_NOSYS",
+            "el_charge", "el_select_medium_noniso_NOSYS", "el_select_medium_NOSYS", "el_select_tight_noniso_NOSYS", "el_select_tight_NOSYS",
             "el_trigMatched_HLT_e26_lhtight_nod0_ivarloose", "el_trigMatched_HLT_e60_lhmedium_nod0", "el_trigMatched_HLT_e140_lhloose_nod0"
         }
     );
@@ -1126,6 +1166,9 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       const std::vector<float>& phi,
       const std::vector<float>& charge,
       const std::vector<int>& IFF_Class,
+      const std::vector<char>& medium_noniso,
+      const std::vector<char>& medium,
+      const std::vector<char>& tight_noniso,
       const std::vector<char>& tight,
       const std::vector<char>& HLT_e24,
       const std::vector<char>& HLT_e26,
@@ -1140,6 +1183,9 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       std::vector<float> phi_float(phi.begin(), phi.end());
       std::vector<float> charge_float(charge.begin(), charge.end());
       std::vector<float> IFF_Class_float(IFF_Class.begin(), IFF_Class.end());
+      std::vector<float> medium_noniso_float(medium_noniso.begin(), medium_noniso.end());
+      std::vector<float> medium_float(medium.begin(), medium.end());
+      std::vector<float> tight_noniso_float(tight_noniso.begin(), tight_noniso.end());
       std::vector<float> tight_float(tight.begin(), tight.end());
       std::vector<float> HLT_e24_float(HLT_e24.begin(), HLT_e24.end());
       std::vector<float> HLT_e26_float(HLT_e26.begin(), HLT_e26.end());
@@ -1170,6 +1216,12 @@ ROOT::RDF::RNode tWZClass::defineVariables(
           all_variables.push_back(charge_float[indices[i]]);
           all_variables.push_back(IFF_Class_float[indices[i]]);
           if (tight_float[indices[i]] == 1) {
+            all_variables.push_back(4.);
+          } else if (tight_noniso_float[indices[i]] == 1) {
+            all_variables.push_back(3.);
+          } else if (medium_float[indices[i]] == 1) {
+            all_variables.push_back(2.);
+          } else if (medium_noniso_float[indices[i]] == 1) {
             all_variables.push_back(1.);
           } else {
             all_variables.push_back(0.);
@@ -1213,7 +1265,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineElectronVariablesMC,
         {
             "el_pt_GeV_NOSYS", "el_e_GeV_NOSYS", "el_eta", "el_phi",
-            "el_charge", "el_IFFClass", "el_select_tight_NOSYS",
+            "el_charge", "el_IFFClass", "el_select_medium_noniso_NOSYS", "el_select_medium_NOSYS", "el_select_tight_noniso_NOSYS", "el_select_tight_NOSYS",
             "el_trigMatched_HLT_e24_lhmedium_L1EM20VH", "el_trigMatched_HLT_e26_lhtight_nod0_ivarloose", "el_trigMatched_HLT_e60_lhmedium",
             "el_trigMatched_HLT_e60_lhmedium_nod0", "el_trigMatched_HLT_e120_lhloose", "el_trigMatched_HLT_e140_lhloose_nod0"
         }
@@ -1226,7 +1278,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineElectronVariablesMC,
         {
             "el_pt_GeV_NOSYS", "el_e_GeV_NOSYS", "el_eta", "el_phi",
-            "el_charge", "el_IFFClass", "el_select_tight_NOSYS",
+            "el_charge", "el_IFFClass", "el_select_medium_noniso_NOSYS", "el_select_medium_NOSYS", "el_select_tight_noniso_NOSYS", "el_select_tight_NOSYS",
             "el_trigMatched_HLT_e26_lhtight_nod0_ivarloose", "el_trigMatched_HLT_e26_lhtight_nod0_ivarloose", "el_trigMatched_HLT_e60_lhmedium_nod0",
             "el_trigMatched_HLT_e60_lhmedium_nod0", "el_trigMatched_HLT_e140_lhloose_nod0", "el_trigMatched_HLT_e140_lhloose_nod0"
         }
@@ -1256,6 +1308,87 @@ ROOT::RDF::RNode tWZClass::defineVariables(
 
   /*
     ======================================================
+      Total medium_noniso electrons from el_variables_NOSYS
+    ======================================================
+  */
+  // Function - Count electrons
+  auto countMediumNonIsoElectrons = [](
+      const std::vector<float>& el_variables
+  ) {
+      const int size = el_variables.size();
+
+      int count = 0;
+      for (int i = 0; i < size/9; ++i) {
+          if (el_variables[i * 9 + 7] >= 1.) { // Check if medium_noniso
+              count++;
+          }
+      }
+      return count;
+  };
+  // Variable - Count Electrons
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "nMediumNonIsoElectrons_NOSYS",
+      countMediumNonIsoElectrons,
+      {"el_variables_NOSYS"}
+  );
+
+  /*
+    ======================================================
+      Total medium electrons from el_variables_NOSYS
+    ======================================================
+  */
+  // Function - Count electrons
+  auto countMediumElectrons = [](
+      const std::vector<float>& el_variables
+  ) {
+      const int size = el_variables.size();
+
+      int count = 0;
+      for (int i = 0; i < size/9; ++i) {
+          if (el_variables[i * 9 + 7] == 2. || el_variables[i * 9 + 7] == 4.) { // Check if medium
+              count++;
+          }
+      }
+      return count;
+  };
+  // Variable - Count Electrons
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "nMediumElectrons_NOSYS",
+      countMediumElectrons,
+      {"el_variables_NOSYS"}
+  );
+
+  /*
+    ======================================================
+      Total tight_noniso electrons from el_variables_NOSYS
+    ======================================================
+  */
+  // Function - Count electrons
+  auto countTightNonIsoElectrons = [](
+      const std::vector<float>& el_variables
+  ) {
+      const int size = el_variables.size();
+
+      int count = 0;
+      for (int i = 0; i < size/9; ++i) {
+          if (el_variables[i * 9 + 7] >= 3.) { // Check if tight_noniso
+              count++;
+          }
+      }
+      return count;
+  };
+  // Variable - Count Electrons
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "nTightNonIsoElectrons_NOSYS",
+      countTightNonIsoElectrons,
+      {"el_variables_NOSYS"}
+  );
+
+  /*
+    ======================================================
       Total tight electrons from el_variables_NOSYS
     ======================================================
   */
@@ -1267,7 +1400,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
 
       int count = 0;
       for (int i = 0; i < size/9; ++i) {
-          if (el_variables[i * 9 + 7] == 1.) { // Check if tight
+          if (el_variables[i * 9 + 7] == 4.) { // Check if tight
               count++;
           }
       }
@@ -1548,6 +1681,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       const std::vector<float>& eta,
       const std::vector<float>& phi,
       const std::vector<float>& charge,
+      const std::vector<char>& medium,
       const std::vector<char>& tight,
       const std::vector<char>& HLT_mu20_mu26,
       const std::vector<char>& HLT_mu40_mu50
@@ -1557,6 +1691,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       std::vector<float> eta_float(eta.begin(), eta.end());
       std::vector<float> phi_float(phi.begin(), phi.end());
       std::vector<float> charge_float(charge.begin(), charge.end());
+      std::vector<float> medium_float(medium.begin(), medium.end());
       std::vector<float> tight_float(tight.begin(), tight.end());
       std::vector<float> HLT_mu20_mu26_float(HLT_mu20_mu26.begin(), HLT_mu20_mu26.end());
       std::vector<float> HLT_mu40_mu50_float(HLT_mu40_mu50.begin(), HLT_mu40_mu50.end());  
@@ -1583,6 +1718,8 @@ ROOT::RDF::RNode tWZClass::defineVariables(
           all_variables.push_back(charge_float[indices[i]]);
           all_variables.push_back(0.);
           if (tight_float[indices[i]] == 1) {
+            all_variables.push_back(2.);
+          } else if (medium_float[indices[i]] == 1) {
             all_variables.push_back(1.);
           } else {
             all_variables.push_back(0.);
@@ -1615,7 +1752,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineMuonVariablesData,
         {
             "mu_pt_GeV_NOSYS", "mu_e_GeV_NOSYS", "mu_eta", "mu_phi",
-            "mu_charge", "mu_select_tight_NOSYS", 
+            "mu_charge", "mu_select_medium_NOSYS", "mu_select_tight_NOSYS", 
             "mu_trigMatched_HLT_mu20_iloose_L1MU15", "mu_trigMatched_HLT_mu40"
         }
     );
@@ -1627,7 +1764,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineMuonVariablesData,
         {
             "mu_pt_GeV_NOSYS", "mu_e_GeV_NOSYS", "mu_eta", "mu_phi",
-            "mu_charge", "mu_select_tight_NOSYS",
+            "mu_charge", "mu_select_medium_NOSYS", "mu_select_tight_NOSYS",
             "mu_trigMatched_HLT_mu26_ivarmedium", "mu_trigMatched_HLT_mu50"
         }
     );
@@ -1640,6 +1777,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       const std::vector<float>& phi,
       const std::vector<float>& charge,
       const std::vector<int>& IFF_Class,
+      const std::vector<char>& medium,
       const std::vector<char>& tight,
       const std::vector<char>& HLT_mu20,
       const std::vector<char>& HLT_mu26,
@@ -1652,6 +1790,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       std::vector<float> phi_float(phi.begin(), phi.end());
       std::vector<float> charge_float(charge.begin(), charge.end());
       std::vector<float> IFF_Class_float(IFF_Class.begin(), IFF_Class.end());
+      std::vector<float> medium_float(medium.begin(), medium.end());
       std::vector<float> tight_float(tight.begin(), tight.end());
       std::vector<float> HLT_mu20_float(HLT_mu20.begin(), HLT_mu20.end());
       std::vector<float> HLT_mu26_float(HLT_mu26.begin(), HLT_mu26.end());
@@ -1681,6 +1820,8 @@ ROOT::RDF::RNode tWZClass::defineVariables(
           all_variables.push_back(charge_float[indices[i]]);
           all_variables.push_back(IFF_Class_float[indices[i]]);
           if (tight_float[indices[i]] == 1) {
+            all_variables.push_back(2.);
+          } else if (medium_float[indices[i]] == 1) {
             all_variables.push_back(1.);
           } else {
             all_variables.push_back(0.);
@@ -1717,7 +1858,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineMuonVariablesMC,
         {
             "mu_pt_GeV_NOSYS", "mu_e_GeV_NOSYS", "mu_eta", "mu_phi",
-            "mu_charge", "mu_IFFClass", "mu_select_tight_NOSYS",
+            "mu_charge", "mu_IFFClass", "mu_select_medium_NOSYS", "mu_select_tight_NOSYS",
             "mu_trigMatched_HLT_mu20_iloose_L1MU15", "mu_trigMatched_HLT_mu26_ivarmedium", 
             "mu_trigMatched_HLT_mu40", "mu_trigMatched_HLT_mu50"
         }
@@ -1730,7 +1871,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
         combineMuonVariablesMC,
         {
             "mu_pt_GeV_NOSYS", "mu_e_GeV_NOSYS", "mu_eta", "mu_phi",
-            "mu_charge", "mu_IFFClass", "mu_select_tight_NOSYS",
+            "mu_charge", "mu_IFFClass", "mu_select_medium_NOSYS", "mu_select_tight_NOSYS",
             "mu_trigMatched_HLT_mu26_ivarmedium", "mu_trigMatched_HLT_mu26_ivarmedium", 
             "mu_trigMatched_HLT_mu50", "mu_trigMatched_HLT_mu50"
         }
@@ -1758,6 +1899,32 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       {"mu_variables_NOSYS"}
   );
 
+  /*
+    ======================================================
+      Total medium muons from mu_variables_NOSYS
+    ======================================================
+  */
+  // Function - Count muons
+  auto countMediumMuons = [](
+      const std::vector<float>& mu_variables
+  ) {
+      const int size = mu_variables.size()/9;
+
+      int count = 0;
+      for (int i = 0; i < size; ++i) {
+          if (mu_variables[i * 9 + 7] >= 1.) { // Check if medium
+              count++;
+          }
+      }
+      return count;
+  };
+  // Variable - Count Muons
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "nMediumMuons_NOSYS",
+      countMediumMuons,
+      {"mu_variables_NOSYS"}
+  );
 
   /*
     ======================================================
@@ -1772,7 +1939,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
 
       int count = 0;
       for (int i = 0; i < size/9; ++i) {
-          if (mu_variables[i * 9 + 7] == 1.) { // Check if tight
+          if (mu_variables[i * 9 + 7] == 2.) { // Check if tight
               count++;
           }
       }
@@ -2039,6 +2206,37 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       {"mu_variables_NOSYS"}
   );
 
+  /*
+    ====================================================
+        Count leptons from electrons and muons
+    ====================================================
+  */
+  // Function - Count leptons
+  auto countLeptons = [](
+      const int& nElectrons,
+      const int& nMuons
+  ) {
+
+      // Return the total count of leptons
+      int nLeptons = nElectrons + nMuons;
+
+      return nLeptons;
+  };
+  // Variable - Count Loose Leptons
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "nLooseLeptons_NOSYS",
+      countLeptons,
+      {"nLooseElectrons_NOSYS", "nLooseMuons_NOSYS"}
+  );
+  // Variable - Count Tight Leptons
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "nTightLeptons_NOSYS",
+      countLeptons,
+      {"nTightElectrons_NOSYS", "nTightMuons_NOSYS"}
+  );
+
   /* 
     ======================================================
         Combine jet variables into one vector
@@ -2072,6 +2270,7 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       // Create one large vector to store all the variables
       std::vector<float> all_variables;
       for (int i = 0; i < size; ++i) {
+        if (abs(eta_float[indices[i]]) > 2.5) continue; // Skip jets with |eta| > 2.5
         all_variables.push_back(pT[indices[i]]);
         all_variables.push_back(e_float[indices[i]]);
         all_variables.push_back(eta_float[indices[i]]);
@@ -3030,6 +3229,117 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       {"non_bjet_TLV_NOSYS"}
   );
 
+  /*
+    ===================================================================================
+        Calculate the mass of all possible opposite sign same flavour leptons
+    ===================================================================================
+  */
+  // Function
+  auto calculateOSSFMass = [](
+      const std::vector<TLV>& leptons,
+      const std::vector<float>& lep_pdgID
+  ) {
+      const int nLeptons = leptons.size();
+
+      std::vector<float> ossf_mass_flat;
+      if (nLeptons == 0) { return ossf_mass_flat; }
+      else {
+        for(int lep_i = 0; lep_i<nLeptons; lep_i++) {
+          for(int lep_j = 0; lep_j<nLeptons; lep_j++) {
+            if (lep_i >= lep_j) { continue; }
+            if (lep_pdgID.at(lep_i) + lep_pdgID.at(lep_j) != 0.) { continue; } // OSSF
+
+            TLV pair = leptons.at(lep_i) + leptons.at(lep_j);
+            float mass = pair.M();
+
+            ossf_mass_flat.push_back(mass); // Store the mass of the OSSF
+            // Store the indices of the leptons involved in the OSSF pair
+            ossf_mass_flat.push_back(static_cast<float>(lep_i)); // Index of first le
+            ossf_mass_flat.push_back(static_cast<float>(lep_j)); // Index of second lepton
+          }
+        }
+      }
+
+      return ossf_mass_flat;
+  };
+  // Variable - OSSF Mass
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "ossf_mass_NOSYS",
+      calculateOSSFMass,
+      {"lepton_TLV_NOSYS", "sorted_lep_pdgID_NOSYS"}
+  );
+  // Variable - Number of OSSF pairs
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "nOSSF_NOSYS",
+      "static_cast<int>(ossf_mass_NOSYS.size() / 3)" //
+  );
+
+  /*
+    ===================================================================================
+        Create OSSF Flag for selection cut purposes
+    ===================================================================================
+  */
+  // Function
+  auto ossfFlag = [](
+      const std::vector<float>& ossf_mass_flat
+  ) {
+      const int size = ossf_mass_flat.size();
+
+      int result = 1; // Default to 1 (true)
+      for (int i = 0; i < size; i+= 3) {
+          if (ossf_mass_flat.at(i) < 10.) { // If any mass is less than 10 GeV, set result to 0 (false)
+              result = 0;
+              break;
+          }
+      }
+      return result;
+  };
+  // Variable - OSSF Flag
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "ossfFlag_NOSYS",
+      ossfFlag,
+      {"ossf_mass_NOSYS"}
+  );
+
+  /*
+    ===================================================================================
+        Determine if the massOSSF sits within th Z window
+    ===================================================================================
+  */
+  // Function
+  auto massOSSFInZWindow = [](
+      const std::vector<float>& ossf_mass_flat
+  ) {
+      const double z_mass = 91.1876;
+      const double minMass = z_mass - 10.;
+      const double maxMass = z_mass + 10.;
+
+      const int size = ossf_mass_flat.size();
+      std::vector<float> result; // Initialize result vector 
+      for (int i = 0; i < size; i+= 3) {
+          if (ossf_mass_flat[i] >= minMass && ossf_mass_flat[i] <= maxMass) {
+              result.push_back(ossf_mass_flat[i]); // Store the mass if it is within the Z window
+          }
+      }
+      return result; // Return the vector of masses within the Z window
+  };
+  // Variable - Mass OSSF in Z Window
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "massOSSF_inZWindow_NOSYS",
+      massOSSFInZWindow,
+      {"ossf_mass_NOSYS"}
+  );
+  // Variable - Number of OSSF pairs in Z window
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "nOSSF_inZWindow_NOSYS",
+      "static_cast<int>(massOSSF_inZWindow_NOSYS.size())"
+  );
+
   /* 
     ============================================================
         Calculate difference mass of opposite sign same flavour leptons
@@ -3143,8 +3453,8 @@ ROOT::RDF::RNode tWZClass::defineVariables(
       const std::vector<TLV>& leptons
   ) {
       const double z_mass = 91.1876;
-      const double minMass = z_mass - 30.;
-      const double maxMass = z_mass + 30.;
+      const double minMass = z_mass - 10.;
+      const double maxMass = z_mass + 10.;
 
       const int size = mass_flat.size() / 3;
       const int nLeptons = leptons.size();
@@ -3207,8 +3517,8 @@ ROOT::RDF::RNode tWZClass::defineVariables(
     const std::vector<float>& mass
   ) {
       const double z_mass = 91.1876;
-      const double minMass = z_mass - 30.;
-      const double maxMass = z_mass + 30.;
+      const double minMass = z_mass - 10.;
+      const double maxMass = z_mass + 10.;
 
       const int size = mass.size();
 
@@ -3753,6 +4063,315 @@ ROOT::RDF::RNode tWZClass::defineVariables(
     );
   }
 
+  /*
+    ===============================================================
+      DeltaPhi betweeen different leading Leptons and MET
+    ===============================================================
+  */
+  // Variable - Leptons and MET
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "deltaPhi_Lep0_MET_NOSYS",
+      "static_cast<float>(std::abs(lep0_phi_NOSYS - met_phi_NOSYS))"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "deltaPhi_Lep1_MET_NOSYS",
+      "static_cast<float>(std::abs(lep1_phi_NOSYS - met_phi_NOSYS))"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "deltaPhi_Lep2_MET_NOSYS",
+      "static_cast<float>(std::abs(lep2_phi_NOSYS - met_phi_NOSYS))"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "deltaPhi_Lep3_MET_NOSYS",
+      "static_cast<float>(std::abs(lep3_phi_NOSYS - met_phi_NOSYS))"
+  );
+
+  /*
+    ===============================================================
+      Combine the 4 lepton system with other particles
+    ===============================================================
+  */
+  // 4Lepton + Leading order Bjet
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llll_Bjet0_TLV_NOSYS",
+      "static_cast<ROOT::Math::PtEtaPhiEVector>((llll_TLV_NOSYS + bjet_TLV_NOSYS.at(0)))"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llll_Bjet0_pt_NOSYS",
+      "static_cast<float>((llll_TLV_NOSYS + bjet_TLV_NOSYS.at(0)).Pt())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llll_Bjet0_eta_NOSYS",
+      "static_cast<float>((llll_TLV_NOSYS + bjet_TLV_NOSYS.at(0)).Eta())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llll_Bjet0_mass_NOSYS",
+      "static_cast<float>((llll_TLV_NOSYS + bjet_TLV_NOSYS.at(0)).M())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "deltaPt_llll_Bjet0_NOSYS",
+      "static_cast<float>(std::abs(llll_TLV_NOSYS.Pt() - bjet_TLV_NOSYS.at(0).Pt()))"
+  );
+  // Leading Z Candidate + 4Lepton & Leading Bjet system
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "deltaPhi_ZCandidate0_llllBjet0_NOSYS",
+      "static_cast<float>(std::abs(llll_Bjet0_TLV_NOSYS.Phi() - ZCandidate0_phi_NOSYS))"
+  );
+  // MET + 4Lepton & Leading Bjet system
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llllBjet0_MET_pt_NOSYS",
+      "static_cast<float>(llll_Bjet0_TLV_NOSYS.Pt() + met_met_GeV_NOSYS)"
+  );
+  // MET + 4Lepton system
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llll_MET_pt_NOSYS",
+      "static_cast<float>(llll_TLV_NOSYS.Pt() + met_met_GeV_NOSYS)"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "llll_MET_mass_NOSYS",
+      "static_cast<float>(llll_TLV_NOSYS.M() + met_met_GeV_NOSYS)"
+  );
+  // Leptons + MET
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "l_l_l_l_MET_pt_NOSYS",
+      "static_cast<float>(LT_NOSYS + met_met_GeV_NOSYS)"
+  );
+  // Leptons + MET + Leading Bjet
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "l_l_l_l_MET_Bjet0_pt_NOSYS",
+      "static_cast<float>(LT_NOSYS + met_met_GeV_NOSYS + bjet_TLV_NOSYS.at(0).Pt())"
+  );
+  // MET + Leading Bjet
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "MET_Bjet0_pt_NOSYS",
+      "static_cast<float>(met_met_GeV_NOSYS + bjet_TLV_NOSYS.at(0).Pt())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "MET_Bjet0_mass_NOSYS",
+      "static_cast<float>(met_met_GeV_NOSYS + bjet_TLV_NOSYS.at(0).M())"
+  );
+
+  /*
+    ===============================================================
+      Combine all leptons and all jets
+    ===============================================================
+  */
+  // Function
+  auto combineTwoTLVs = [](
+      const std::vector<TLV>& lep_tlv,
+      const std::vector<TLV>& jet_tlv
+  ) {
+      const int lep_size = lep_tlv.size();
+      const int jet_size = jet_tlv.size();
+
+      TLV result;
+      for (int i=0; i<lep_size; i++) {
+        result += lep_tlv.at(i);
+      }
+      for (int j=0; j<jet_size; j++) {
+        result += jet_tlv.at(j);
+      }
+
+      return result;
+  };
+  // Variables - Leptons & Jets
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "allLep_allJet_Sys_TLV_NOSYS",
+      combineTwoTLVs,
+      {"lepton_TLV_NOSYS","jet_TLV_NOSYS"}
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allJet_Sys_pt_NOSYS",
+      "static_cast<float>(allLep_allJet_Sys_TLV_NOSYS.Pt())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allJet_Sys_eta_NOSYS",
+      "static_cast<float>(allLep_allJet_Sys_TLV_NOSYS.Eta())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allJet_Sys_phi_NOSYS",
+      "static_cast<float>(allLep_allJet_Sys_TLV_NOSYS.Phi())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allJet_Sys_mass_NOSYS",
+      "static_cast<float>(allLep_allJet_Sys_TLV_NOSYS.M())"
+  );
+
+  /*
+    ===============================================================
+      Combine all jets
+    ===============================================================
+  */
+  // Function
+  auto combineTLV = [](
+      const std::vector<TLV>& tlv
+  ) {
+      const int size = tlv.size();
+
+      TLV result;
+      for (int i=0; i<size; i++) {
+        result += tlv.at(i);
+      }
+
+      return result;
+  };
+  //Variable - Jets
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "allJets_Sys_TLV_NOSYS",
+      combineTLV,
+      {"jet_TLV_NOSYS"}
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allJets_Sys_pt_NOSYS",
+      "static_cast<float>(allJets_Sys_TLV_NOSYS.Pt())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allJets_Sys_eta_NOSYS",
+      "static_cast<float>(allJets_Sys_TLV_NOSYS.Eta())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allJets_Sys_phi_NOSYS",
+      "static_cast<float>(allJets_Sys_TLV_NOSYS.Phi())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allJets_Sys_mass_NOSYS",
+      "static_cast<float>(allJets_Sys_TLV_NOSYS.M())"
+  );
+
+  /*
+    ===============================================================
+      Combine all Bjets
+    ===============================================================
+  */
+  //Variable - Bjets
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "allBjets_Sys_TLV_NOSYS",
+      combineTLV,
+      {"bjet_TLV_NOSYS"}
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allBjets_Sys_pt_NOSYS",
+      "static_cast<float>(allBjets_Sys_TLV_NOSYS.Pt())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allBjets_Sys_eta_NOSYS",
+      "static_cast<float>(allBjets_Sys_TLV_NOSYS.Eta())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allBjets_Sys_phi_NOSYS",
+      "static_cast<float>(allBjets_Sys_TLV_NOSYS.Phi())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allBjets_Sys_mass_NOSYS",
+      "static_cast<float>(allBjets_Sys_TLV_NOSYS.M())"
+  );
+
+  /*
+    ===============================================================
+      Combine all leptons and all bjets
+    ===============================================================
+  */
+  //Variable - Leptons & Bjets
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "allLep_allBjets_Sys_TLV_NOSYS",
+      combineTwoTLVs,
+      {"lepton_TLV_NOSYS","bjet_TLV_NOSYS"}
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allBjets_Sys_pt_NOSYS",
+      "static_cast<float>(allLep_allBjets_Sys_TLV_NOSYS.Pt())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allBjets_Sys_eta_NOSYS",
+      "static_cast<float>(allLep_allBjets_Sys_TLV_NOSYS.Eta())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allBjets_Sys_phi_NOSYS",
+      "static_cast<float>(allLep_allBjets_Sys_TLV_NOSYS.Phi())"
+  );
+  mainNode = MainFrame::systematicStringDefine(
+      mainNode,
+      "allLep_allBjets_Sys_mass_NOSYS",
+      "static_cast<float>(allLep_allBjets_Sys_TLV_NOSYS.M())"
+  );
+
+  /*
+    ===============================================================
+      DeltaR between loBjet and loZCandidate
+    ===============================================================
+  */
+  // Function
+  auto deltaR_leading = [](
+      const std::vector<TLV>& tlv1,
+      const std::vector<TLV>& tlv2
+  ) {
+      float delEta = 0.;
+      float delPhi = 0.;
+      float delRSqrd = 0.;
+
+      float result = 0.;
+      delEta = tlv1.at(0).Eta() - tlv2.at(0).Eta();
+      delPhi = tlv1.at(0).Phi() - tlv2.at(0).Phi();
+      delRSqrd = pow(delEta,2) + pow(delPhi,2);
+      result = sqrt(delRSqrd);
+
+      return result;
+  };
+  // Variable - DeltaR
+  mainNode = MainFrame::systematicDefine(
+      mainNode,
+      "deltaR_Bjet0_ZCandidate0_NOSYS",
+      deltaR_leading,
+      {"bjet_TLV_NOSYS","sorted_ZCandidate_TLV_NOSYS"}
+  );
+  
+  /*
+    ===============================================================
+      DeltaPhi between Bjet0 and ZCandidate0
+    ===============================================================
+  */
+  // Variable - DeltaPhi
+  mainNode = MainFrame::systematicStringDefine(
+    mainNode,
+    "deltaPhi_Bjet0_ZCandidate0_NOSYS",
+    "static_cast<float>(std::abs(bjet_TLV_NOSYS.at(0).Phi() - sorted_ZCandidate_TLV_NOSYS.at(0).Phi()))"
+  );
 
   /* 
   ================================
